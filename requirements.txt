@@ -1,0 +1,39 @@
+# MkDocs Template Requirements
+# Based on analysis of 8 existing mkdocs.yml configurations
+
+# Core MkDocs
+mkdocs>=1.5.0
+mkdocs-material>=9.0.0
+
+# Common Plugins (found in analyzed projects)
+mkdocs-git-revision-date-localized-plugin>=1.2.0
+mkdocs-git-committers-plugin>=2.2.0
+mkdocs-mermaid2-plugin>=0.6.0
+mkdocs-macros-plugin>=0.7.0
+mkdocs-minify-plugin>=0.7.0
+mkdocs-click>=0.8.0
+
+# Additional useful plugins
+mkdocs-awesome-pages-plugin>=2.9.0
+mkdocs-redirects>=1.2.0
+mkdocs-include-markdown-plugin>=4.0.0
+mkdocs-section-index>=0.3.0
+mkdocs-exclude>=1.0.0
+
+# Development dependencies
+mkdocs-serve>=1.0.0
+
+# Optional: For PDF generation
+mkdocs-with-pdf>=0.9.0
+
+# Optional: For enhanced search
+mkdocs-windmill>=1.0.5
+
+# Optional: For RSS feeds
+mkdocs-rss-plugin>=1.0.0
+
+# Optional: For social cards
+pillow>=9.0.0
+
+# Required for macros.py
+PyYAML>=6.0.0

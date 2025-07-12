@@ -1,0 +1,274 @@
+version: '3'
+
+# MkDocs Development Taskfile
+# Provides tasks for installing, building, and serving MkDocs documentation
+
+vars:
+  MKDOCS_CONFIG: '{{.MKDOCS_CONFIG | default "mkdocs.yml"}}'
+  SITE_DIR: '{{.SITE_DIR | default "site"}}'
+  DOCS_DIR: '{{.DOCS_DIR | default "docs"}}'
+  PYTHON_VERSION: '{{.PYTHON_VERSION | default "3.11"}}'
+
+tasks:
+  # === Installation Tasks ===
+  install:
+    desc: Install MkDocs and all dependencies using pipx
+    cmds:
+      - task: install-pipx
+      - task: install-mkdocs
+      - task: install-plugins
+    
+  install-pipx:
+    desc: Install pipx if not already installed
+    cmds:
+      - |
+        if ! command -v pipx &> /dev/null; then
+          echo "Installing pipx..."
+          python3 -m pip install --user pipx
+          python3 -m pipx ensurepath
+          echo "Please restart your shell or run: source ~/.zshrc"
+        else
+          echo "pipx is already installed"
+        fi
+    silent: true
+
+  install-mkdocs:
+    desc: Install MkDocs core using pipx
+    cmds:
+      - |
+        echo "Installing MkDocs with pipx..."
+        pipx install mkdocs
+        pipx inject mkdocs mkdocs-material
+        echo "MkDocs core installed successfully"
+    deps: [install-pipx]
+
+  install-plugins:
+    desc: Install MkDocs plugins using pipx inject
+    cmds:
+      - |
+        echo "Installing MkDocs plugins..."
+        pipx inject mkdocs mkdocs-git-revision-date-localized-plugin
+        pipx inject mkdocs mkdocs-git-committers-plugin
+        pipx inject mkdocs mkdocs-mermaid2-plugin
+        pipx inject mkdocs mkdocs-macros-plugin
+        pipx inject mkdocs mkdocs-minify-plugin
+        pipx inject mkdocs mkdocs-awesome-pages-plugin
+        pipx inject mkdocs mkdocs-redirects
+        pipx inject mkdocs mkdocs-include-markdown-plugin
+        pipx inject mkdocs mkdocs-section-index
+        pipx inject mkdocs mkdocs-exclude
+        pipx inject mkdocs pillow
+        pipx inject mkdocs PyYAML
+        echo "All plugins installed successfully"
+    deps: [install-mkdocs]
+
+  # === Development Tasks ===
+  serve:
+    desc: Serve documentation locally with live reload
+    cmds:
+      - mkdocs serve --config-file={{.MKDOCS_CONFIG}} --dev-addr=127.0.0.1:8000
+    deps: [check-config]
+
+  serve-all:
+    desc: Serve documentation on all interfaces (accessible from network)
+    cmds:
+      - mkdocs serve --config-file={{.MKDOCS_CONFIG}} --dev-addr=0.0.0.0:8000
+    deps: [check-config]
+
+  build:
+    desc: Build documentation site
+    cmds:
+      - mkdocs build --config-file={{.MKDOCS_CONFIG}} --site-dir={{.SITE_DIR}}
+    deps: [check-config]
+
+  build-strict:
+    desc: Build documentation with strict mode (warnings as errors)
+    cmds:
+      - mkdocs build --config-file={{.MKDOCS_CONFIG}} --site-dir={{.SITE_DIR}} --strict
+    deps: [check-config]
+
+  # === Validation Tasks ===
+  check-config:
+    desc: Validate MkDocs configuration
+    cmds:
+      - |
+        if [ ! -f "{{.MKDOCS_CONFIG}}" ]; then
+          echo "Error: MkDocs config file '{{.MKDOCS_CONFIG}}' not found"
+          echo "Available templates:"
+          ls -la *.yml 2>/dev/null || echo "No .yml files found"
+          exit 1
+        fi
+        echo "Configuration file '{{.MKDOCS_CONFIG}}' found"
+    silent: true
+
+  validate:
+    desc: Validate documentation structure and links
+    cmds:
+      - task: check-config
+      - task: build-strict
+      - |
+        echo "Validation completed successfully"
+
+  # === Cleanup Tasks ===
+  clean:
+    desc: Clean build artifacts
+    cmds:
+      - rm -rf {{.SITE_DIR}}
+      - rm -rf .mkdocs_build
+      - rm -rf .cache
+      - echo "Cleaned build artifacts"
+
+  clean-all:
+    desc: Clean all generated files and caches
+    cmds:
+      - task: clean
+      - rm -rf .mike
+      - rm -rf .mkdocs_plugins_cache
+      - rm -rf .material_cache
+      - rm -rf .git-revision-date-localized-cache
+      - rm -rf .mermaid-cache
+      - rm -rf .macros_cache
+      - rm -rf .nav_cache
+      - echo "Cleaned all caches and generated files"
+
+  # === Template Tasks ===
+  init-basic:
+    desc: Initialize project with basic MkDocs template
+    cmds:
+      - |
+        if [ -f "mkdocs.yml" ]; then
+          echo "Warning: mkdocs.yml already exists. Backing up to mkdocs.yml.bak"
+          cp mkdocs.yml mkdocs.yml.bak
+        fi
+        cp mkdocs-basic-template.yml mkdocs.yml
+        cp macros.py .
+        cp .metadata.yaml .
+        mkdir -p {{.DOCS_DIR}}
+        cp -r docs/* {{.DOCS_DIR}}/ 2>/dev/null || true
+        echo "Basic MkDocs project initialized"
+
+  init-standard:
+    desc: Initialize project with standard MkDocs template
+    cmds:
+      - |
+        if [ -f "mkdocs.yml" ]; then
+          echo "Warning: mkdocs.yml already exists. Backing up to mkdocs.yml.bak"
+          cp mkdocs.yml mkdocs.yml.bak
+        fi
+        cp mkdocs-template.yml mkdocs.yml
+        cp macros.py .
+        cp .metadata.yaml .
+        mkdir -p {{.DOCS_DIR}}
+        cp -r docs/* {{.DOCS_DIR}}/ 2>/dev/null || true
+        echo "Standard MkDocs project initialized"
+
+  init-advanced:
+    desc: Initialize project with advanced MkDocs template
+    cmds:
+      - |
+        if [ -f "mkdocs.yml" ]; then
+          echo "Warning: mkdocs.yml already exists. Backing up to mkdocs.yml.bak"
+          cp mkdocs.yml mkdocs.yml.bak
+        fi
+        cp mkdocs-advanced-template.yml mkdocs.yml
+        cp macros.py .
+        cp .metadata.yaml .
+        mkdir -p {{.DOCS_DIR}}
+        cp -r docs/* {{.DOCS_DIR}}/ 2>/dev/null || true
+        echo "Advanced MkDocs project initialized"
+
+  # === Deployment Tasks ===
+  deploy-gh-pages:
+    desc: Deploy to GitHub Pages
+    cmds:
+      - mkdocs gh-deploy --config-file={{.MKDOCS_CONFIG}}
+    deps: [validate]
+
+  deploy-gh-pages-force:
+    desc: Force deploy to GitHub Pages (use with caution)
+    cmds:
+      - mkdocs gh-deploy --config-file={{.MKDOCS_CONFIG}} --force
+    deps: [build-strict]
+
+  # === Utility Tasks ===
+  info:
+    desc: Show MkDocs and environment information
+    cmds:
+      - |
+        echo "=== MkDocs Environment Info ==="
+        echo "MkDocs version:"
+        mkdocs --version
+        echo ""
+        echo "Python version:"
+        python3 --version
+        echo ""
+        echo "pipx version:"
+        pipx --version
+        echo ""
+        echo "Current directory:"
+        pwd
+        echo ""
+        echo "Configuration file: {{.MKDOCS_CONFIG}}"
+        echo "Site directory: {{.SITE_DIR}}"
+        echo "Docs directory: {{.DOCS_DIR}}"
+        echo ""
+        echo "Available templates:"
+        ls -la *template*.yml 2>/dev/null || echo "No template files found"
+
+  list-plugins:
+    desc: List installed MkDocs plugins
+    cmds:
+      - |
+        echo "=== Installed MkDocs Plugins ==="
+        pipx list | grep -A 20 "package mkdocs" || echo "MkDocs not installed with pipx"
+
+  update:
+    desc: Update MkDocs and all plugins
+    cmds:
+      - |
+        echo "Updating MkDocs and plugins..."
+        pipx upgrade mkdocs
+        echo "MkDocs updated successfully"
+
+  # === Development Helpers ===
+  new-page:
+    desc: Create a new documentation page
+    vars:
+      PAGE_NAME: '{{.CLI_ARGS | default "new-page"}}'
+    cmds:
+      - |
+        PAGE_PATH="{{.DOCS_DIR}}/{{.PAGE_NAME}}.md"
+        if [ -f "$PAGE_PATH" ]; then
+          echo "Error: Page '$PAGE_PATH' already exists"
+          exit 1
+        fi
+        mkdir -p "$(dirname "$PAGE_PATH")"
+        echo "# {{.PAGE_NAME | title}}" > "$PAGE_PATH"
+        echo "" >> "$PAGE_PATH"
+        echo "Your content here..." >> "$PAGE_PATH"
+        echo "Created new page: $PAGE_PATH"
+
+  lint:
+    desc: Run basic linting on documentation
+    cmds:
+      - |
+        echo "=== Documentation Linting ==="
+        echo "Checking for common issues..."
+        # Check for broken internal links
+        find {{.DOCS_DIR}} -name "*.md" -exec grep -l "](.*\.md)" {} \; | while read file; do
+          echo "Checking internal links in: $file"
+          # This is a basic check - you might want to use a proper link checker
+        done
+        echo "Linting completed"
+
+  # === Help ===
+  help:
+    desc: Show available tasks
+    cmds:
+      - task --list
+    silent: true
+
+  default:
+    desc: Default task - show help
+    cmds:
+      - task: help

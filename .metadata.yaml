@@ -1,0 +1,68 @@
+# Project Metadata Template
+# This file contains project metadata that is synchronized with git tags
+
+# Version information
+version: "v1.0.0"
+version_name: "Initial Release"
+release_date: "2025-01-01"
+
+# Project information
+project:
+  name: "Documentation Project"
+  description: "Comprehensive documentation for your project"
+  repository: "https://github.com/yourusername/your-project"
+  documentation: "https://yourusername.github.io/your-project/"
+
+# Release information
+release:
+  major_features:
+    - "Initial documentation structure"
+    - "Comprehensive user guide"
+    - "API reference documentation"
+    - "Installation and setup guide"
+    - "Best practices and examples"
+  improvements:
+    - "Clean and modern design"
+    - "Responsive layout for all devices"
+    - "Fast search functionality"
+    - "Version control integration"
+    - "Automated deployment pipeline"
+  bug_fixes:
+    - "Fixed navigation issues"
+    - "Improved mobile responsiveness"
+    - "Corrected code syntax highlighting"
+  
+# Metrics
+metrics:
+  total_documents: 10
+  total_pages: 25
+  total_sections: 50
+  documentation_lines: 2500
+  code_examples: 75
+  images: 15
+  tables: 20
+
+# Authors and contributors
+authors:
+  - name: "Your Name"
+    email: "your.email@example.com"
+    role: "Lead Author"
+  - name: "Contributor Name"
+    email: "contributor@example.com"
+    role: "Contributor"
+
+# Configuration
+settings:
+  enable_search: true
+  enable_comments: false
+  enable_analytics: false
+  theme: "material"
+  primary_color: "blue"
+  accent_color: "light-blue"
+
+# External links
+links:
+  homepage: "https://yourcompany.com"
+  support: "https://support.yourcompany.com"
+  community: "https://community.yourcompany.com"
+  changelog: "https://github.com/yourusername/your-project/blob/main/CHANGELOG.md"

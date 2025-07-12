@@ -1,0 +1,305 @@
+# Advanced MkDocs Template
+# Based on analysis of 8 existing mkdocs.yml configurations
+
+site_name: Advanced Project Documentation
+site_description: Comprehensive documentation with advanced features and plugins
+site_author: Advanced Documentation Team
+site_url: https://yourusername.github.io/advanced-project
+
+# Repository
+repo_name: yourusername/advanced-project
+repo_url: https://github.com/yourusername/advanced-project
+edit_uri: edit/main/docs/
+
+# Copyright
+copyright: Copyright &copy; 2025 Advanced Documentation Team
+
+# Configuration
+theme:
+  name: material
+  language: en
+  palette:
+    # Palette toggle for light mode
+    - scheme: default
+      primary: blue
+      accent: light blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - scheme: slate
+      primary: blue
+      accent: light blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+  # Typography
+  font:
+    text: Roboto
+    code: Roboto Mono
+
+  # Features (comprehensive list from analysis)
+  features:
+    - announce.dismiss
+    - content.action.edit
+    - content.action.view
+    - content.code.annotate
+    - content.code.copy
+    - content.tabs.link
+    - content.tooltips
+    - header.autohide
+    - navigation.expand
+    - navigation.footer
+    - navigation.indexes
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.instant.progress
+    - navigation.path
+    - navigation.prune
+    - navigation.sections
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.top
+    - navigation.tracking
+    - search.highlight
+    - search.share
+    - search.suggest
+    - toc.follow
+    - toc.integrate
+
+  # Custom styling
+  icon:
+    logo: material/book
+    repo: fontawesome/brands/github
+    edit: material/pencil
+    view: material/eye
+    admonition:
+      note: octicons/tag-16
+      abstract: octicons/checklist-16
+      info: octicons/info-16
+      tip: octicons/squirrel-16
+      success: octicons/check-16
+      question: octicons/question-16
+      warning: octicons/alert-16
+      failure: octicons/x-circle-16
+      danger: octicons/zap-16
+      bug: octicons/bug-16
+      example: octicons/beaker-16
+      quote: octicons/quote-16
+
+# Plugins (comprehensive list from analysis)
+plugins:
+  - search:
+      lang: en
+      separator: '[\s\-,:!=\[\]()"/]+|(?!\b)(?=[A-Z][a-z])|(?!\b)(?=[A-Z][A-Z])'
+  - minify:
+      minify_html: true
+  - git-revision-date-localized:
+      type: date
+      timezone: UTC
+      locale: en
+      fallback_to_build_date: true
+      enable_creation_date: true
+  - git-committers:
+      repository: yourusername/advanced-project
+      branch: main
+      token: !ENV [MKDOCS_GIT_COMMITTERS_APIKEY, GITHUB_TOKEN]
+  - mermaid2:
+      version: '11.4.0'
+      arguments:
+        startOnLoad: true
+        theme: 'base'
+        themeVariables:
+          primaryColor: '#2196f3'
+          primaryTextColor: '#000000'
+          primaryBorderColor: '#1976d2'
+          lineColor: '#333333'
+          secondaryColor: '#ff9800'
+          tertiaryColor: '#4caf50'
+          background: '#ffffff'
+          mainBkg: '#ffffff'
+          secondBkg: '#f5f5f5'
+        flowchart:
+          htmlLabels: true
+          useMaxWidth: true
+          curve: 'basis'
+        sequence:
+          actorMargin: 50
+          boxMargin: 10
+          boxTextMargin: 5
+          noteMargin: 10
+          messageMargin: 35
+          useMaxWidth: true
+        gantt:
+          numberSectionStyles: 4
+          useMaxWidth: true
+        gitgraph:
+          useMaxWidth: true
+  - macros:
+      module_name: macros
+
+# Extensions (comprehensive list from analysis)
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - meta
+  - tables
+  - toc:
+      permalink: true
+      title: On this page
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+      user: yourusername
+      repo: advanced-project
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:mermaid2.fence_mermaid
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+# Navigation (comprehensive structure based on analysis)
+nav:
+  - 🏠 Home:
+    - 📖 Overview: index.md
+    - 🧭 Navigation Guide: navigation.md
+    - 📋 Documentation Summary: README.md
+
+  - 🚀 Getting Started:
+    - 🔍 System Overview: getting-started/overview.md
+    - ⚡ Quick Setup: getting-started/quick-start.md
+    - 📦 Installation: getting-started/installation.md
+    - 🔧 Configuration: getting-started/configuration.md
+
+  - 📚 User Guide:
+    - 🎯 Basic Usage: user-guide/basic-usage.md
+    - 🚀 Advanced Usage: user-guide/advanced-usage.md
+    - 💡 Best Practices: user-guide/best-practices.md
+    - 🔧 Troubleshooting: user-guide/troubleshooting.md
+
+  - 🏛️ Architecture:
+    - 🎯 System Architecture: architecture/system-architecture.md
+    - 🛡️ Security Design: architecture/security-design.md
+    - 📐 Technical Design: architecture/technical-design.md
+
+  - 🔌 API Reference:
+    - 📄 API Overview: api-reference/overview.md
+    - 🔗 Endpoints: api-reference/endpoints.md
+    - 📊 Data Models: api-reference/data-models.md
+    - 📝 Use Cases: api-reference/use-cases.md
+
+  - 💻 Development:
+    - 🔰 Setup Guide: development/setup.md
+    - 🏗️ Contributing: development/contributing.md
+    - 🧪 Testing: development/testing.md
+    - 🚀 CI/CD: development/cicd.md
+
+  - 🚀 Deployment:
+    - 📋 Installation Guide: deployment/installation.md
+    - ☸️ Kubernetes: deployment/kubernetes.md
+    - 🐳 Docker: deployment/docker.md
+    - 🔧 Configuration: deployment/configuration.md
+
+  - 📊 Examples:
+    - 🔰 Basic Examples: examples/basic-examples.md
+    - 🚀 Advanced Examples: examples/advanced-examples.md
+    - 💼 Use Cases: examples/use-cases.md
+
+  - 📖 Reference:
+    - 🔧 CLI Commands: reference/cli-commands.md
+    - ⚙️ Configuration: reference/configuration.md
+    - 🛠️ Troubleshooting: reference/troubleshooting.md
+    - ❓ FAQ: reference/faq.md
+
+  - 📋 About:
+    - 📖 About Project: about.md
+    - 📄 Changelog: changelog.md
+    - 📜 License: license.md
+    - 🤝 Contributing: contributing.md
+
+# Custom CSS and JavaScript
+extra_css:
+  - stylesheets/extra.css
+  - stylesheets/theme.css
+
+extra_javascript:
+  - https://unpkg.com/mermaid@11.4.0/dist/mermaid.min.js
+  - javascripts/extra.js
+
+# Extra configuration
+extra:
+  version:
+    provider: mike
+    default: latest
+    current: 1.0.0
+
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/yourusername/advanced-project
+      name: GitHub Repository
+    - icon: fontawesome/solid/envelope
+      link: mailto:your-email@example.com
+      name: Contact Author
+    - icon: fontawesome/solid/globe
+      link: https://yourusername.github.io/advanced-project/
+      name: Documentation Site
+
+  analytics:
+    provider: google
+    property: G-XXXXXXXXXX
+    feedback:
+      title: Was this page helpful?
+      ratings:
+        - icon: material/emoticon-happy-outline
+          name: This page was helpful
+          data: 1
+          note: >
+            Thanks for your feedback!
+        - icon: material/emoticon-sad-outline
+          name: This page could be improved
+          data: 0
+          note: >
+            Thanks for your feedback! Help us improve this page by
+            <a href="https://github.com/yourusername/advanced-project/issues/new/?title=[Feedback]+{title}+-+{url}" target="_blank" rel="noopener">telling us what you found helpful or what could be improved</a>.
+
+  tags:
+    documentation: documentation
+    api: api
+    tutorial: tutorial
+    guide: guide
+    reference: reference
+    examples: examples
+
+# Validation
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
