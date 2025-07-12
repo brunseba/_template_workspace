@@ -219,10 +219,11 @@ def define_env(env):
         except Exception:
             return datetime.now().strftime('%Y-%m-%d')
     
-    # Environment variables for templates
+    # Environment variables for templates (avoid conflicts with functions)
+    metadata_obj = load_metadata()
     env.variables['git_tag'] = get_git_tag()
     env.variables['commit_hash'] = get_commit_hash()
     env.variables['branch_name'] = get_branch_name()
-    env.variables['metadata'] = load_metadata()
+    env.variables['metadata'] = metadata_obj
     env.variables['build_date'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    env.variables['last_updated'] = last_updated()
+    env.variables['build_timestamp'] = datetime.now().isoformat()

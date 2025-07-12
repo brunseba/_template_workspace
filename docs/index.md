@@ -27,7 +27,7 @@ Get started with our documentation in just a few steps:
 
 ## Latest Updates
 
-**Current Version:** {{ git_tag }}  
+**Current Version:** {{ get_git_tag() }}  
 **Last Updated:** {{ last_updated() }}  
 **Build Date:** {{ build_date }}
 
@@ -60,6 +60,6 @@ Explore our documentation:
 ---
 
 !!! info "Documentation Status"
-    This documentation is automatically built from version **{{ git_tag }}** (commit {{ commit_hash }}) and is always up-to-date with the latest changes.
+    This documentation is automatically built from version **{{ get_git_tag() }}** (commit {{ get_commit_hash() }}) and is always up-to-date with the latest changes.
 
 *Generated on {{ build_date }}*

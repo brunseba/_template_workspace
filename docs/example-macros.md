@@ -8,11 +8,11 @@ This page demonstrates how to use the various macros available in the template.
 The project name is: **{{ metadata.project.name }}**
 
 ### Current Version
-We're running version: **{{ git_tag }}**
+We're running version: **{{ get_git_tag() }}**
 
 ### Git Information
-- **Branch:** {{ branch_name }}
-- **Commit:** {{ commit_hash }}
+- **Branch:** {{ get_branch_name() }}
+- **Commit:** {{ get_commit_hash() }}
 - **Last Updated:** {{ last_updated() }}
 
 ## Information Blocks
@@ -88,7 +88,15 @@ The following environment variables are available:
 - **commit_hash:** `{{ commit_hash }}`
 - **branch_name:** `{{ branch_name }}`
 - **build_date:** `{{ build_date }}`
-- **last_updated:** `{{ last_updated }}`
+
+## Function Calls
+
+You can also call functions directly:
+
+- **get_git_tag():** `{{ get_git_tag() }}`
+- **get_commit_hash():** `{{ get_commit_hash() }}`
+- **get_branch_name():** `{{ get_branch_name() }}`
+- **last_updated():** `{{ last_updated() }}`
 
 ## Tips for Using Macros
 

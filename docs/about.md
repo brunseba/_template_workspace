@@ -36,8 +36,8 @@ This documentation provides complete information about the project, including in
 |-----------|-----------|
 | **Repository** | [{{ metadata.project.repository }}]({{ metadata.project.repository }}) |
 | **Documentation** | [{{ metadata.project.documentation }}]({{ metadata.project.documentation }}) |
-| **Current Branch** | {{ branch_name }} |
-| **Latest Commit** | {{ commit_hash }} |
+| **Current Branch** | {{ get_branch_name() }} |
+| **Latest Commit** | {{ get_commit_hash() }} |
 | **Last Updated** | {{ last_updated() }} |
 
 ## Project Links

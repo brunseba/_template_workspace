@@ -1,0 +1,105 @@
+# MkDocs Template
+
+site_name: Project Documentation
+site_description: Comprehensive documentation for the project.
+site_author: Documentation Team
+site_url: https://yourusername.github.io/project
+
+repo_name: yourusername/project
+repo_url: https://github.com/yourusername/project
+edit_uri: edit/main/docs/
+
+copyright: Copyright © 2025 Documentation Team
+
+# Theme
+theme:
+  name: material
+  language: en
+  palette:
+    - scheme: default
+      primary: blue
+      accent: light blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: black
+      accent: light blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  font:
+    text: Roboto
+    code: Roboto Mono
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.top
+    - search.highlight
+    - search.suggest
+    - content.code.annotate
+    - content.code.copy
+    - header.autohide
+
+# Plugins
+plugins:
+  - search:
+      lang: en
+  # Git plugins disabled for template - enable when you have a real repository
+  # - git-revision-date-localized:
+  #     enable_creation_date: true
+  # - git-committers:
+  #     repository: yourusername/project
+  #     branch: main
+
+# Markdown Extensions
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      pygments_lang_class: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+# Navigation
+nav:
+  - Home: index.md
+  - Overview:
+    - Introduction: overview/introduction.md
+    - Features: overview/features.md
+  - Installation:
+    - Requirements: installation/requirements.md
+    - Setup: installation/setup.md
+  - User Guide:
+    - Basic Usage: user-guide/basic-usage.md
+    - Advanced Usage: user-guide/advanced-usage.md
+  - API Reference:
+    - Endpoints: api-reference/endpoints.md
+    - Data Models: api-reference/data-models.md
+  - Contributing: contributing.md
+  - Changelog: changelog.md
+  - About: about.md
+
+# Extra configuration
+extra:
+  version:
+    provider: mike
+    default: latest
+
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/yourusername/project
+
