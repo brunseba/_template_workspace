@@ -101,10 +101,11 @@ plugins:
       locale: en
       fallback_to_build_date: true
       enable_creation_date: true
-  - git-committers:
-      repository: yourusername/advanced-project
-      branch: main
-      token: !ENV [MKDOCS_GIT_COMMITTERS_APIKEY, GITHUB_TOKEN]
+  # Git committers plugin disabled for template - enable when you have a real repository
+  # - git-committers:
+  #     repository: yourusername/advanced-project
+  #     branch: main
+  #     token: !ENV [MKDOCS_GIT_COMMITTERS_APIKEY, GITHUB_TOKEN]
   - mermaid2:
       version: '11.4.0'
       arguments:

@@ -368,11 +368,21 @@ metrics:
 6. **Deploy** to GitHub Pages with `task deploy-gh-pages`
 7. **Maintain** with regular updates using `task update`
 
+## GitHub Integration
+
+When you're ready to use a real GitHub repository:
+
+1. **Read the GitHub setup guide**: `GITHUB_SETUP.md`
+2. **Install GitHub plugins**: `task install-git-plugins`
+3. **Configure authentication**: Set up GitHub token
+4. **Enable git plugins**: Uncomment in your `mkdocs.yml`
+
 ## Resources
 
 - [MkDocs Documentation](https://www.mkdocs.org/)
 - [Material Theme Documentation](https://squidfunk.github.io/mkdocs-material/)
 - [Task Documentation](https://taskfile.dev/)
 - [pipx Documentation](https://pypa.github.io/pipx/)
+- [GitHub Setup Guide](GITHUB_SETUP.md)
 
 Happy documenting! 📚

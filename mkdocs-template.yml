@@ -47,8 +47,12 @@ theme:
 plugins:
   - search:
       lang: en
-  - git-revision-date-localized:
-      enable_creation_date: true
+  # Git plugins disabled for template - enable when you have a real repository
+  # - git-revision-date-localized:
+  #     enable_creation_date: true
+  # - git-committers:
+  #     repository: yourusername/project
+  #     branch: main
 
 # Markdown Extensions
 markdown_extensions:

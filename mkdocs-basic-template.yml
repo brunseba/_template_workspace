@@ -42,6 +42,9 @@ theme:
 # Plugins
 plugins:
   - search
+  # Git plugins disabled for template - enable when you have a real repository
+  # - git-revision-date-localized:
+  #     enable_creation_date: true
 
 # Markdown Extensions
 markdown_extensions:
