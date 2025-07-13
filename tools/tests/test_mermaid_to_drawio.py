@@ -3,7 +3,7 @@ import os
 import tempfile
 import pytest
 from pathlib import Path
-from tools.mermaid_to_drawio import generate_drawio_file
+from tools.mermaid_to_drawio import generate_drawio_file, convert_mermaid_to_drawio, process_mermaid_files
 
 
 class TestMermaidToDrawio:

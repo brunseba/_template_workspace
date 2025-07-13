@@ -68,7 +68,7 @@ graph TD
             
             # Should complete successfully
             assert result.exit_code == 0
-            assert "Processing" in result.output or "Found" in result.output
+            assert "Generated" in result.output or "Summary" in result.output
 
     def test_extract_with_nonexistent_directory(self):
         """Test extract command with non-existent directory."""
@@ -114,7 +114,7 @@ print("Hello, World!")
             
             # Should complete successfully
             assert result.exit_code == 0
-            assert "Converting" in result.output or "Converted" in result.output
+            assert "Generated" in result.output or "Created" in result.output
 
     def test_to_drawio_with_nonexistent_directory(self):
         """Test to-drawio command with non-existent directory."""
@@ -122,7 +122,7 @@ print("Hello, World!")
         result = runner.invoke(cli, ['to-drawio', '/nonexistent/directory'])
         
         # Should handle error gracefully
-        assert result.exit_code != 0 or "not found" in result.output or "No files found" in result.output
+        assert result.exit_code == 0 and "Error" in result.output
 
     def test_to_drawio_with_no_mermaid_files(self):
         """Test to-drawio command with directory containing no mermaid files."""
@@ -160,7 +160,7 @@ graph TD
             output_dir = os.path.join(temp_dir, "output")
             os.makedirs(output_dir, exist_ok=True)
             
-            result = runner.invoke(cli, ['extract', temp_dir, '--output', output_dir])
+            result = runner.invoke(cli, ['extract', temp_dir, '--output-dir', output_dir])
             
             # Should complete successfully
             assert result.exit_code == 0

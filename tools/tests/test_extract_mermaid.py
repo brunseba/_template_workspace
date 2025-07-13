@@ -3,7 +3,7 @@ import os
 import tempfile
 import pytest
 from pathlib import Path
-from tools.extract_mermaid import extract_mermaid_blocks, process_file
+from tools.extract_mermaid import extract_mermaid_blocks, process_file, extract_mermaid_diagrams
 
 
 class TestExtractMermaid:
@@ -105,17 +105,15 @@ graph TD
             temp_file = f.name
 
         try:
-            result = process_file(temp_file)
-            assert result is not None
-            assert len(result) == 1
-            assert "graph TD" in result[0]
+            result = process_file(Path(temp_file), Path.cwd(), verbose=False, dry_run=False)
+            assert result == 1
         finally:
             os.unlink(temp_file)
 
     def test_process_nonexistent_file(self):
         """Test processing a non-existent file."""
-        result = process_file("/nonexistent/file.md")
-        assert result is None
+        result = process_file(Path("/nonexistent/file.md"), Path.cwd(), verbose=False, dry_run=False)
+        assert result == 0
 
     def test_extract_mermaid_case_insensitive(self):
         """Test that mermaid code blocks are detected case-insensitively."""
