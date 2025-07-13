@@ -10,7 +10,7 @@ from .mermaid_to_drawio import main as drawio_main
 
 
 @click.group()
-@click.version_option(version='0.2.0', prog_name='mermaid-tools')
+@click.version_option(version='0.3.0', prog_name='mermaid-tools')
 @click.pass_context
 def cli(ctx):
     """
@@ -334,7 +334,7 @@ def md_to_drawio_command(input_path, output_file, recursive, verbose, temp_dir, 
 @cli.command('version')
 def version():
     """Show version information."""
-    click.echo("mermaid-tools version 0.2.0")
+    click.echo("mermaid-tools version 0.3.0")
     click.echo("Extract and convert Mermaid diagrams")
 
 
