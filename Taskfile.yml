@@ -60,6 +60,7 @@ tasks:
         pipx inject mkdocs mkdocs-exclude
         pipx inject mkdocs pillow
         pipx inject mkdocs PyYAML
+        pipx inject mkdocs mike
         echo "All plugins installed successfully"
     deps: [install-mkdocs]
 

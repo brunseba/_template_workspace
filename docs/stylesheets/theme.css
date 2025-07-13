@@ -1,0 +1,349 @@
+/*
+ * Theme CSS for Advanced MkDocs Template
+ * Advanced theme customizations and dark mode support
+ */
+
+/* Light theme variables */
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: #2196f3;
+  --md-primary-fg-color--light: #64b5f6;
+  --md-primary-fg-color--dark: #1976d2;
+  
+  --md-accent-fg-color: #03dac6;
+  --md-accent-fg-color--transparent: rgba(3, 218, 198, 0.1);
+  
+  /* Custom theme colors */
+  --md-custom-bg: #fafafa;
+  --md-custom-surface: #ffffff;
+  --md-custom-border: #e0e0e0;
+  --md-custom-text: #212121;
+  --md-custom-text-light: #757575;
+  
+  /* Mermaid theme variables for light mode */
+  --mermaid-theme: base;
+  --mermaid-primary-color: #2196f3;
+  --mermaid-primary-text-color: #000000;
+  --mermaid-primary-border-color: #1976d2;
+  --mermaid-line-color: #333333;
+  --mermaid-secondary-color: #ff9800;
+  --mermaid-tertiary-color: #4caf50;
+  --mermaid-background: #ffffff;
+  --mermaid-main-bkg: #ffffff;
+  --mermaid-second-bkg: #f5f5f5;
+}
+
+/* Dark theme variables */
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #64b5f6;
+  --md-primary-fg-color--light: #90caf9;
+  --md-primary-fg-color--dark: #42a5f5;
+  
+  --md-accent-fg-color: #80cbc4;
+  --md-accent-fg-color--transparent: rgba(128, 203, 196, 0.1);
+  
+  /* Custom dark theme colors */
+  --md-custom-bg: #121212;
+  --md-custom-surface: #1e1e1e;
+  --md-custom-border: #333333;
+  --md-custom-text: #e0e0e0;
+  --md-custom-text-light: #b0b0b0;
+  
+  /* Mermaid theme variables for dark mode */
+  --mermaid-theme: dark;
+  --mermaid-primary-color: #64b5f6;
+  --mermaid-primary-text-color: #ffffff;
+  --mermaid-primary-border-color: #42a5f5;
+  --mermaid-line-color: #e0e0e0;
+  --mermaid-secondary-color: #ffb74d;
+  --mermaid-tertiary-color: #81c784;
+  --mermaid-background: #1e1e1e;
+  --mermaid-main-bkg: #1e1e1e;
+  --mermaid-second-bkg: #2a2a2a;
+}
+
+/* Enhanced Mermaid styling for both themes */
+.mermaid {
+  background: var(--mermaid-background) !important;
+  border: 1px solid var(--md-custom-border);
+  padding: 1.5rem;
+  margin: 2rem 0;
+  border-radius: 12px;
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-md-color-scheme="slate"] .mermaid {
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.3),
+    0 2px 4px -1px rgba(0, 0, 0, 0.2);
+}
+
+/* Mermaid hover effects */
+.mermaid:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+[data-md-color-scheme="slate"] .mermaid:hover {
+  box-shadow: 
+    0 10px 15px -3px rgba(0, 0, 0, 0.4),
+    0 4px 6px -2px rgba(0, 0, 0, 0.3);
+}
+
+/* Enhanced navigation styling */
+.md-nav {
+  font-size: 0.85rem;
+}
+
+.md-nav__title {
+  font-weight: 700;
+  color: var(--md-custom-text);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.75rem;
+}
+
+.md-nav__item--active > .md-nav__link {
+  background: var(--md-accent-fg-color--transparent);
+  border-radius: 6px;
+  font-weight: 600;
+  color: var(--md-primary-fg-color);
+}
+
+/* Enhanced code styling */
+.md-typeset code {
+  background: var(--md-custom-surface);
+  border: 1px solid var(--md-custom-border);
+  border-radius: 4px;
+  padding: 0.2em 0.4em;
+  font-size: 0.85em;
+}
+
+.md-typeset pre code {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+/* Enhanced admonitions */
+.md-typeset .admonition {
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+[data-md-color-scheme="slate"] .md-typeset .admonition {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.md-typeset .admonition-title {
+  font-weight: 600;
+  letter-spacing: 0.25px;
+}
+
+/* Enhanced tables */
+.md-typeset table:not([class]) {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--md-custom-border);
+}
+
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.md-typeset table:not([class]) th {
+  background: linear-gradient(135deg, var(--md-primary-fg-color) 0%, var(--md-primary-fg-color--dark) 100%);
+  color: white;
+  font-weight: 600;
+  text-align: left;
+  padding: 1rem;
+  border: none;
+}
+
+.md-typeset table:not([class]) td {
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--md-custom-border);
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+}
+
+.md-typeset table:not([class]) tr:nth-child(even) td {
+  background: var(--md-custom-bg);
+}
+
+/* Enhanced buttons */
+.md-button {
+  background: linear-gradient(135deg, var(--md-primary-fg-color) 0%, var(--md-primary-fg-color--dark) 100%);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.md-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.md-button--primary {
+  background: linear-gradient(135deg, var(--md-accent-fg-color) 0%, #26a69a 100%);
+}
+
+/* Enhanced header */
+.md-header {
+  background: linear-gradient(135deg, var(--md-primary-fg-color) 0%, var(--md-primary-fg-color--dark) 100%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+[data-md-color-scheme="slate"] .md-header {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.md-header__title {
+  font-weight: 600;
+}
+
+/* Enhanced search */
+.md-search__form {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+}
+
+.md-search__input {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: white;
+}
+
+.md-search__input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Enhanced footer */
+.md-footer {
+  background: linear-gradient(135deg, var(--md-primary-fg-color--dark) 0%, #0d47a1 100%);
+}
+
+/* Custom content enhancements */
+.md-content__inner {
+  padding-bottom: 3rem;
+}
+
+.md-typeset h1 {
+  color: var(--md-primary-fg-color);
+  font-weight: 700;
+  border-bottom: 3px solid var(--md-accent-fg-color);
+  padding-bottom: 0.5rem;
+}
+
+.md-typeset h2 {
+  color: var(--md-primary-fg-color--dark);
+  font-weight: 600;
+  margin-top: 2rem;
+}
+
+.md-typeset h3 {
+  color: var(--md-custom-text);
+  font-weight: 600;
+}
+
+/* Enhanced blockquotes */
+.md-typeset blockquote {
+  border-left: 4px solid var(--md-accent-fg-color);
+  background: var(--md-accent-fg-color--transparent);
+  border-radius: 0 8px 8px 0;
+  margin: 1.5rem 0;
+  padding: 1rem 1.5rem;
+}
+
+/* Version selector styling */
+.md-version {
+  background: var(--md-accent-fg-color);
+  color: var(--md-primary-fg-color--dark);
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 0.25rem 0.75rem;
+}
+
+/* Custom animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.md-content__inner > * {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for dark theme */
+[data-md-color-scheme="slate"] ::-webkit-scrollbar-track {
+  background: #2a2a2a;
+}
+
+[data-md-color-scheme="slate"] ::-webkit-scrollbar-thumb {
+  background: var(--md-primary-fg-color);
+}
+
+[data-md-color-scheme="slate"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--md-primary-fg-color--light);
+}
+
+/* Responsive enhancements */
+@media screen and (max-width: 768px) {
+  .md-typeset h1 {
+    font-size: 1.75rem;
+  }
+  
+  .mermaid {
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+  
+  .md-typeset table:not([class]) th,
+  .md-typeset table:not([class]) td {
+    padding: 0.5rem;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .md-typeset code {
+    border-width: 2px;
+  }
+  
+  .md-nav__item--active > .md-nav__link {
+    border: 2px solid var(--md-primary-fg-color);
+  }
+  
+  .mermaid {
+    border-width: 2px;
+  }
+}

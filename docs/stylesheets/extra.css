@@ -1,0 +1,210 @@
+/* 
+ * Extra CSS for Advanced MkDocs Template
+ * Custom styling enhancements for Material theme
+ */
+
+/* Custom color variables */
+:root {
+  --custom-primary: #2196f3;
+  --custom-accent: #03dac6;
+  --custom-background: #fafafa;
+  --custom-surface: #ffffff;
+  --custom-error: #cf6679;
+  --custom-success: #4caf50;
+  --custom-warning: #ff9800;
+  --custom-info: #2196f3;
+  
+  /* Mermaid diagram colors */
+  --mermaid-primary: #2196f3;
+  --mermaid-secondary: #ff9800;
+  --mermaid-tertiary: #4caf50;
+  --mermaid-background: #ffffff;
+}
+
+/* Enhanced Mermaid diagram styling */
+.mermaid {
+  text-align: center;
+  margin: 2rem 0;
+  padding: 1rem;
+  background: var(--mermaid-background);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.mermaid:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Custom admonition styles */
+.md-typeset .admonition.note {
+  border-left: 4px solid var(--custom-info);
+}
+
+.md-typeset .admonition.tip {
+  border-left: 4px solid var(--custom-success);
+}
+
+.md-typeset .admonition.warning {
+  border-left: 4px solid var(--custom-warning);
+}
+
+.md-typeset .admonition.danger {
+  border-left: 4px solid var(--custom-error);
+}
+
+/* Enhanced code block styling */
+.md-typeset .highlight {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.md-typeset .highlight pre {
+  margin: 0;
+  padding: 1rem;
+}
+
+/* Custom header styling */
+.md-header {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced navigation */
+.md-nav__item--active > .md-nav__link {
+  font-weight: 600;
+  color: var(--custom-primary);
+}
+
+/* Custom button styling */
+.md-button {
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.md-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Enhanced search styling */
+.md-search__input {
+  border-radius: 6px;
+}
+
+/* Custom table styling */
+.md-typeset table:not([class]) {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.md-typeset table:not([class]) th {
+  background: var(--custom-primary);
+  color: white;
+  font-weight: 600;
+}
+
+.md-typeset table:not([class]) tr:nth-child(even) {
+  background: rgba(33, 150, 243, 0.05);
+}
+
+/* Enhanced footer */
+.md-footer {
+  background: linear-gradient(135deg, var(--custom-primary) 0%, #1976d2 100%);
+}
+
+/* Custom scrollbar (webkit browsers) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--custom-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1976d2;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .mermaid {
+    margin: 1rem 0;
+    padding: 0.5rem;
+  }
+  
+  .md-typeset .highlight pre {
+    padding: 0.5rem;
+  }
+}
+
+/* Print styles */
+@media print {
+  .mermaid {
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+  
+  .md-header,
+  .md-footer,
+  .md-sidebar {
+    display: none !important;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .mermaid,
+  .md-button,
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Focus styles for better accessibility */
+.md-nav__link:focus,
+.md-button:focus,
+.md-search__input:focus {
+  outline: 2px solid var(--custom-accent);
+  outline-offset: 2px;
+}
+
+/* Custom utility classes */
+.text-center {
+  text-align: center;
+}
+
+.text-primary {
+  color: var(--custom-primary);
+}
+
+.bg-primary {
+  background-color: var(--custom-primary);
+  color: white;
+}
+
+.rounded {
+  border-radius: 8px;
+}
+
+.shadow {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced version badge */
+.md-version {
+  background: var(--custom-accent);
+  color: #000;
+  font-weight: 600;
+  border-radius: 4px;
+}

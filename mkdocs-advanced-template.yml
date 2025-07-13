@@ -97,7 +97,7 @@ plugins:
       minify_html: true
   - git-revision-date-localized:
       type: date
-      timezone: UTC
+      timezone: Europe/Paris
       locale: en
       fallback_to_build_date: true
       enable_creation_date: true
@@ -107,7 +107,7 @@ plugins:
   #     branch: main
   #     token: !ENV [MKDOCS_GIT_COMMITTERS_APIKEY, GITHUB_TOKEN]
   - mermaid2:
-      version: '11.4.0'
+    #  javascript: https://unpkg.com/mermaid@11.4.0/dist/mermaid.esm.min.mjs
       arguments:
         startOnLoad: true
         theme: 'base'
@@ -180,7 +180,12 @@ markdown_extensions:
       custom_fences:
         - name: mermaid
           class: mermaid
-          format: !!python/name:mermaid2.fence_mermaid
+          format: !!python/name:mermaid2.fence_mermaid_custom
+  # - pymdownx.superfences:
+  #     custom_fences:
+  #       - name: mermaid
+  #         class: mermaid
+  #         format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.tasklist:
@@ -241,10 +246,12 @@ nav:
     - ❓ FAQ: reference/faq.md
 
   - 📋 About:
-    - 📖 About Project: about.md
-    - 📄 Changelog: changelog.md
-    - 📜 License: license.md
-    - 🤝 Contributing: contributing.md
+    - 📖 About Project: about/about.md
+    - 🎨 Example Page: about/example.md
+    - 🎨 Example Page: about/mermaid-example.md
+    - 📄 Changelog: about/changelog.md
+    - 📜 License: about/license.md
+    - 🤝 Contributing: about/contributing.md
 
 # Custom CSS and JavaScript
 extra_css:
@@ -252,8 +259,8 @@ extra_css:
   - stylesheets/theme.css
 
 extra_javascript:
-  - https://unpkg.com/mermaid@11.4.0/dist/mermaid.min.js
   - javascripts/extra.js
+  - https://unpkg.com/mermaid@10.0.2/dist/mermaid.esm.min.mjs
 
 # Extra configuration
 extra:
