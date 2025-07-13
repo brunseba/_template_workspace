@@ -1,0 +1,16 @@
+sequenceDiagram
+    participant Client
+    participant API
+    participant Database
+    
+    Client->>API: Request data
+    API->>Database: Query
+    Database-->>API: Connection error
+    API-->>Client: 500 Internal Server Error
+    
+    Note over Client,Database: Error handling flow
+    
+    Client->>API: Retry request
+    API->>Database: Query retry
+    Database-->>API: Data
+    API-->>Client: 200 OK with data

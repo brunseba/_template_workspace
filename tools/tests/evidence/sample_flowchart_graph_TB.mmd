@@ -1,0 +1,18 @@
+graph TB
+    subgraph "User Interface"
+        A[Login Form]
+        B[Dashboard]
+        C[Settings]
+    end
+    
+    subgraph "Backend Services"
+        D[Authentication]
+        E[Data Processing]
+        F[Database]
+    end
+    
+    A --> D
+    B --> E
+    C --> F
+    D --> B
+    E --> F

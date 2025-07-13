@@ -1,0 +1,20 @@
+sequenceDiagram
+    participant U as User
+    participant C as Client
+    participant S as Server
+    participant D as Database
+    
+    U->>C: Enter credentials
+    C->>S: Login request
+    S->>D: Validate user
+    D-->>S: User data
+    S-->>C: Authentication token
+    C-->>U: Login successful
+    
+    Note over U,D: User is now authenticated
+    
+    U->>C: Request protected resource
+    C->>S: API call with token
+    S->>S: Validate token
+    S-->>C: Protected data
+    C-->>U: Display data

@@ -1,0 +1,41 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.0.4 Chrome/138.0.7204.97 Electron/37.2.1 Safari/537.36" version="28.0.4" pages="3">
+  <diagram id="231822b844164a15" name="Sample Class Classdiagram">
+    <mxGraphModel dx="706" dy="604" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="" mermaidData="{&quot;data&quot;:&quot;classDiagram\n    class Animal {\n        +String name\n        +int age\n        +makeSound()\n        +eat()\n    }\n    \n    class Dog {\n        +String breed\n        +bark()\n        +wagTail()\n    }\n    \n    class Cat {\n        +String color\n        +meow()\n        +purr()\n    }\n    \n    Animal &lt;|-- Dog\n    Animal &lt;|-- Cat&quot;}" id="afd3f397ef414837">
+          <mxCell style="shape=image;noLabel=1;verticalAlign=top;imageAspect=1;image=data:image/svg+xml,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y5ZjlmOSIgc3Ryb2tlPSIjY2NjIi8+PHRleHQgeD0iMTAwIiB5PSIxMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzMzMyI+TWVybWFpZCBEaWFncmFtPC90ZXh0Pjwvc3ZnPg==;" vertex="1" parent="1">
+            <mxGeometry x="260" y="130" width="200" height="200" as="geometry" />
+          </mxCell>
+        </UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="4f2bb9f06d2e4b65" name="Sample Class Classdiagram 2">
+    <mxGraphModel dx="706" dy="604" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="" mermaidData="{&quot;data&quot;:&quot;classDiagram\n    class University {\n        +String name\n        +String location\n        +List~Student~ students\n        +List~Professor~ professors\n        +enrollStudent(Student)\n        +hireProfessor(Professor)\n    }\n    \n    class Person {\n        &lt;&lt;abstract&gt;&gt;\n        +String name\n        +int age\n        +String email\n        +getName()\n        +getAge()\n    }\n    \n    class Student {\n        +String studentId\n        +String major\n        +float gpa\n        +study()\n        +takeExam()\n    }\n    \n    class Professor {\n        +String employeeId\n        +String department\n        +List~Course~ courses\n        +teach()\n        +research()\n    }\n    \n    class Course {\n        +String courseId\n        +String title\n        +int credits\n        +Professor instructor\n        +List~Student~ enrolledStudents\n        +addStudent(Student)\n    }\n    \n    Person &lt;|-- Student\n    Person &lt;|-- Professor\n    University \&quot;1\&quot; --&gt; \&quot;*\&quot; Student : contains\n    University \&quot;1\&quot; --&gt; \&quot;*\&quot; Professor : employs\n    Professor \&quot;1\&quot; --&gt; \&quot;*\&quot; Course : teaches\n    Course \&quot;*\&quot; --&gt; \&quot;*\&quot; Student : enrolled&quot;}" id="b11f403f617c4c46">
+          <mxCell style="shape=image;noLabel=1;verticalAlign=top;imageAspect=1;image=data:image/svg+xml,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y5ZjlmOSIgc3Ryb2tlPSIjY2NjIi8+PHRleHQgeD0iMTAwIiB5PSIxMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzMzMyI+TWVybWFpZCBEaWFncmFtPC90ZXh0Pjwvc3ZnPg==;" vertex="1" parent="1">
+            <mxGeometry x="260" y="130" width="200" height="200" as="geometry" />
+          </mxCell>
+        </UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="c0f722b134954ac5" name="Sample Class Classdiagram 3">
+    <mxGraphModel dx="706" dy="604" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="" mermaidData="{&quot;data&quot;:&quot;classDiagram\n    class PaymentProcessor {\n        &lt;&lt;interface&gt;&gt;\n        +processPayment(amount, method)\n        +validatePayment(details)\n    }\n    \n    class CreditCardProcessor {\n        +String apiKey\n        +processPayment(amount, method)\n        +validatePayment(details)\n        +chargeCreditCard(cardNumber, amount)\n    }\n    \n    class PayPalProcessor {\n        +String clientId\n        +String clientSecret\n        +processPayment(amount, method)\n        +validatePayment(details)\n        +chargePayPal(email, amount)\n    }\n    \n    class BankTransferProcessor {\n        +String bankCode\n        +processPayment(amount, method)\n        +validatePayment(details)\n        +initiateBankTransfer(account, amount)\n    }\n    \n    PaymentProcessor &lt;|.. CreditCardProcessor\n    PaymentProcessor &lt;|.. PayPalProcessor\n    PaymentProcessor &lt;|.. BankTransferProcessor&quot;}" id="00ff618a30724774">
+          <mxCell style="shape=image;noLabel=1;verticalAlign=top;imageAspect=1;image=data:image/svg+xml,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y5ZjlmOSIgc3Ryb2tlPSIjY2NjIi8+PHRleHQgeD0iMTAwIiB5PSIxMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzMzMyI+TWVybWFpZCBEaWFncmFtPC90ZXh0Pjwvc3ZnPg==;" vertex="1" parent="1">
+            <mxGeometry x="260" y="130" width="200" height="200" as="geometry" />
+          </mxCell>
+        </UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

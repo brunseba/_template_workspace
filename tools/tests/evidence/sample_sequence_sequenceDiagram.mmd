@@ -1,0 +1,16 @@
+sequenceDiagram
+    participant A as Alice
+    participant B as Bob
+    participant C as Charlie
+    
+    A->>B: Hello Bob, how are you?
+    B-->>A: I'm fine, thanks!
+    A->>C: How about you Charlie?
+    C-->>A: I'm doing well too!
+    
+    Note over A,C: This is a note spanning multiple participants
+    
+    A->>B: Let's meet up
+    B->>C: Are you free?
+    C-->>B: Yes, I'm available
+    B-->>A: Charlie can join us

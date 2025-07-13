@@ -1,0 +1,50 @@
+classDiagram
+    class University {
+        +String name
+        +String location
+        +List~Student~ students
+        +List~Professor~ professors
+        +enrollStudent(Student)
+        +hireProfessor(Professor)
+    }
+    
+    class Person {
+        <<abstract>>
+        +String name
+        +int age
+        +String email
+        +getName()
+        +getAge()
+    }
+    
+    class Student {
+        +String studentId
+        +String major
+        +float gpa
+        +study()
+        +takeExam()
+    }
+    
+    class Professor {
+        +String employeeId
+        +String department
+        +List~Course~ courses
+        +teach()
+        +research()
+    }
+    
+    class Course {
+        +String courseId
+        +String title
+        +int credits
+        +Professor instructor
+        +List~Student~ enrolledStudents
+        +addStudent(Student)
+    }
+    
+    Person <|-- Student
+    Person <|-- Professor
+    University "1" --> "*" Student : contains
+    University "1" --> "*" Professor : employs
+    Professor "1" --> "*" Course : teaches
+    Course "*" --> "*" Student : enrolled

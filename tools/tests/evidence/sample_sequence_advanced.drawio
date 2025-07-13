@@ -1,0 +1,41 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.0.4 Chrome/138.0.7204.97 Electron/37.2.1 Safari/537.36" version="28.0.4" pages="3">
+  <diagram id="7b1f25c0ea774f41" name="Sample Sequence Sequencediagram">
+    <mxGraphModel dx="706" dy="604" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="" mermaidData="{&quot;data&quot;:&quot;sequenceDiagram\n    participant A as Alice\n    participant B as Bob\n    participant C as Charlie\n    \n    A-&gt;&gt;B: Hello Bob, how are you?\n    B--&gt;&gt;A: I&#x27;m fine, thanks!\n    A-&gt;&gt;C: How about you Charlie?\n    C--&gt;&gt;A: I&#x27;m doing well too!\n    \n    Note over A,C: This is a note spanning multiple participants\n    \n    A-&gt;&gt;B: Let&#x27;s meet up\n    B-&gt;&gt;C: Are you free?\n    C--&gt;&gt;B: Yes, I&#x27;m available\n    B--&gt;&gt;A: Charlie can join us&quot;}" id="6e3deb64bc4941d8">
+          <mxCell style="shape=image;noLabel=1;verticalAlign=top;imageAspect=1;image=data:image/svg+xml,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y5ZjlmOSIgc3Ryb2tlPSIjY2NjIi8+PHRleHQgeD0iMTAwIiB5PSIxMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzMzMyI+TWVybWFpZCBEaWFncmFtPC90ZXh0Pjwvc3ZnPg==;" vertex="1" parent="1">
+            <mxGeometry x="260" y="130" width="200" height="200" as="geometry" />
+          </mxCell>
+        </UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="25e8aed3daad4410" name="Sample Sequence Sequencediagram 2">
+    <mxGraphModel dx="706" dy="604" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="" mermaidData="{&quot;data&quot;:&quot;sequenceDiagram\n    participant U as User\n    participant C as Client\n    participant S as Server\n    participant D as Database\n    \n    U-&gt;&gt;C: Enter credentials\n    C-&gt;&gt;S: Login request\n    S-&gt;&gt;D: Validate user\n    D--&gt;&gt;S: User data\n    S--&gt;&gt;C: Authentication token\n    C--&gt;&gt;U: Login successful\n    \n    Note over U,D: User is now authenticated\n    \n    U-&gt;&gt;C: Request protected resource\n    C-&gt;&gt;S: API call with token\n    S-&gt;&gt;S: Validate token\n    S--&gt;&gt;C: Protected data\n    C--&gt;&gt;U: Display data&quot;}" id="c24c8cde65b54ab5">
+          <mxCell style="shape=image;noLabel=1;verticalAlign=top;imageAspect=1;image=data:image/svg+xml,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y5ZjlmOSIgc3Ryb2tlPSIjY2NjIi8+PHRleHQgeD0iMTAwIiB5PSIxMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzMzMyI+TWVybWFpZCBEaWFncmFtPC90ZXh0Pjwvc3ZnPg==;" vertex="1" parent="1">
+            <mxGeometry x="260" y="130" width="200" height="200" as="geometry" />
+          </mxCell>
+        </UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="cd5798cf459e40b8" name="Sample Sequence Sequencediagram 3">
+    <mxGraphModel dx="706" dy="604" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="" mermaidData="{&quot;data&quot;:&quot;sequenceDiagram\n    participant Client\n    participant API\n    participant Database\n    \n    Client-&gt;&gt;API: Request data\n    API-&gt;&gt;Database: Query\n    Database--&gt;&gt;API: Connection error\n    API--&gt;&gt;Client: 500 Internal Server Error\n    \n    Note over Client,Database: Error handling flow\n    \n    Client-&gt;&gt;API: Retry request\n    API-&gt;&gt;Database: Query retry\n    Database--&gt;&gt;API: Data\n    API--&gt;&gt;Client: 200 OK with data&quot;}" id="f6fb209b98d14ca7">
+          <mxCell style="shape=image;noLabel=1;verticalAlign=top;imageAspect=1;image=data:image/svg+xml,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y5ZjlmOSIgc3Ryb2tlPSIjY2NjIi8+PHRleHQgeD0iMTAwIiB5PSIxMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzMzMyI+TWVybWFpZCBEaWFncmFtPC90ZXh0Pjwvc3ZnPg==;" vertex="1" parent="1">
+            <mxGeometry x="260" y="130" width="200" height="200" as="geometry" />
+          </mxCell>
+        </UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

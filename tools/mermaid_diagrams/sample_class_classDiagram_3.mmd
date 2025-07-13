@@ -1,0 +1,32 @@
+classDiagram
+    class PaymentProcessor {
+        <<interface>>
+        +processPayment(amount, method)
+        +validatePayment(details)
+    }
+    
+    class CreditCardProcessor {
+        +String apiKey
+        +processPayment(amount, method)
+        +validatePayment(details)
+        +chargeCreditCard(cardNumber, amount)
+    }
+    
+    class PayPalProcessor {
+        +String clientId
+        +String clientSecret
+        +processPayment(amount, method)
+        +validatePayment(details)
+        +chargePayPal(email, amount)
+    }
+    
+    class BankTransferProcessor {
+        +String bankCode
+        +processPayment(amount, method)
+        +validatePayment(details)
+        +initiateBankTransfer(account, amount)
+    }
+    
+    PaymentProcessor <|.. CreditCardProcessor
+    PaymentProcessor <|.. PayPalProcessor
+    PaymentProcessor <|.. BankTransferProcessor

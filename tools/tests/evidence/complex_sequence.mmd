@@ -1,0 +1,43 @@
+sequenceDiagram
+    participant U as User
+    participant FE as Frontend
+    participant API as API Gateway
+    participant AUTH as Auth Service
+    participant DB as Database
+    participant CACHE as Redis Cache
+    participant EMAIL as Email Service
+    
+    U->>FE: Login Request
+    FE->>API: POST /auth/login
+    API->>AUTH: Validate credentials
+    AUTH->>DB: Query user data
+    DB-->>AUTH: User record
+    AUTH->>CACHE: Store session
+    CACHE-->>AUTH: Session stored
+    AUTH-->>API: JWT Token
+    API-->>FE: Authentication response
+    FE-->>U: Login successful
+    
+    Note over U,EMAIL: User authenticated, now accessing protected resource
+    
+    U->>FE: Request dashboard data
+    FE->>API: GET /dashboard (with JWT)
+    API->>AUTH: Validate token
+    AUTH->>CACHE: Check session
+    CACHE-->>AUTH: Session valid
+    AUTH-->>API: Token valid
+    API->>DB: Query dashboard data
+    DB-->>API: Dashboard data
+    API-->>FE: Dashboard response
+    FE-->>U: Display dashboard
+    
+    Note over U,EMAIL: Error scenario
+    
+    U->>FE: Request with expired token
+    FE->>API: GET /protected (expired JWT)
+    API->>AUTH: Validate token
+    AUTH-->>API: Token expired
+    API-->>FE: 401 Unauthorized
+    FE->>EMAIL: Send password reset
+    EMAIL-->>FE: Email sent
+    FE-->>U: Please check email
