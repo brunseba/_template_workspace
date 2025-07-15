@@ -1,3 +1,9 @@
+## v1.4.0 (2025-07-15)
+
+### Fix
+
+- correct version tagging and changelog maintenance
+
 ## v1.3.0 (2025-07-15)
 
 ### Feat
