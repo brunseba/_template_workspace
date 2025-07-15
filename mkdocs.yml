@@ -3,10 +3,10 @@
 site_name: Template Workspace
 site_description: Comprehensive MkDocs template with advanced features and documentation.
 site_author: Documentation Team
-site_url: https://brunseba.github.io/template_workspace
+site_url: https://brunseba.github.io/_template_workspace
 
-repo_name: brunseba/template_workspace
-repo_url: https://github.com/brunseba/template_workspace
+repo_name: brunseba/_template_workspace
+repo_url: https://github.com/brunseba/_template_workspace
 edit_uri: edit/main/docs/
 
 copyright: Copyright © 2025 Documentation Team
@@ -50,7 +50,7 @@ plugins:
   - git-revision-date-localized:
       enable_creation_date: true
   - git-committers:
-      repository: brunseba/template_workspace
+      repository: brunseba/_template_workspace
       branch: main
   - with-pdf:
       author: Documentation Team
@@ -106,5 +106,5 @@ extra:
 
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/brunseba/template_workspace
+      link: https://github.com/brunseba/_template_workspace
 
