@@ -1,3 +1,14 @@
+## v1.3.0 (2025-07-15)
+
+### Feat
+
+- add GitHub repository automation tasks to Taskfile
+- configure MkDocs for template_workspace repository with git tracking and PDF export
+
+### Chore
+
+- update MkDocs configuration for renamed repository _template_workspace
+
 ## v1.2.1 (2025-07-15)
 
 ### Chore
