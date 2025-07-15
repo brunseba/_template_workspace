@@ -8,6 +8,11 @@ vars:
   SITE_DIR: '{{.SITE_DIR | default "site"}}'
   DOCS_DIR: '{{.DOCS_DIR | default "docs"}}'
   PYTHON_VERSION: '{{.PYTHON_VERSION | default "3.11"}}'
+  GITHUB_ORG: '{{.GITHUB_ORG | default "brunseba"}}'
+  REPO_NAME: '{{.REPO_NAME}}'
+  REPO_DESCRIPTION: '{{.REPO_DESCRIPTION | default "Comprehensive MkDocs template with advanced features"}}'
+  SITE_NAME: '{{.SITE_NAME | default "Documentation"}}'
+  SITE_AUTHOR: '{{.SITE_AUTHOR | default "Documentation Team"}}'
 
 tasks:
   # === Installation Tasks ===
@@ -190,6 +195,210 @@ tasks:
         mkdir -p {{.DOCS_DIR}}
         cp -r docs/* {{.DOCS_DIR}}/ 2>/dev/null || true
         echo "Advanced MkDocs project initialized"
+
+  # === GitHub Repository Management ===
+  github-create-repo:
+    desc: Create GitHub repository and configure it
+    cmds:
+      - |
+        if [ -z "{{.REPO_NAME}}" ]; then
+          echo "Error: REPO_NAME is required"
+          echo "Usage: task github-create-repo REPO_NAME=my-repo"
+          exit 1
+        fi
+        echo "Creating GitHub repository {{.GITHUB_ORG}}/{{.REPO_NAME}}..."
+        gh repo create {{.GITHUB_ORG}}/{{.REPO_NAME}} --public --source=. --remote=origin --push --description="{{.REPO_DESCRIPTION}}"
+      - task: github-setup-labels
+      - task: github-create-releases
+      - task: github-update-mkdocs
+        vars:
+          REPO_NAME: '{{.REPO_NAME}}'
+
+  github-setup-labels:
+    desc: Create conventional commit labels for issues
+    cmds:
+      - |
+        echo "Creating conventional commit labels..."
+        gh label create "feat" --description "A new feature" --color "0052cc" --force
+        gh label create "fix" --description "A bug fix" --color "d73a4a" --force
+        gh label create "docs" --description "Documentation only changes" --color "0075ca" --force
+        gh label create "style" --description "Changes that do not affect the meaning of the code" --color "f9d0c4" --force
+        gh label create "refactor" --description "A code change that neither fixes a bug nor adds a feature" --color "fbca04" --force
+        gh label create "perf" --description "A code change that improves performance" --color "7057ff" --force
+        gh label create "test" --description "Adding missing tests or correcting existing tests" --color "1d76db" --force
+        gh label create "build" --description "Changes that affect the build system or external dependencies" --color "fef2c0" --force
+        gh label create "ci" --description "Changes to CI configuration files and scripts" --color "28a745" --force
+        gh label create "chore" --description "Other changes that don't modify src or test files" --color "d4c5f9" --force
+        gh label create "revert" --description "Reverts a previous commit" --color "f85149" --force
+        gh label create "breaking" --description "Breaking changes" --color "b60205" --force
+        echo "Labels created successfully"
+
+  github-create-releases:
+    desc: Create GitHub releases for all existing tags
+    cmds:
+      - |
+        echo "Creating GitHub releases for existing tags..."
+        git tag -l | while read tag; do
+          if ! gh release view "$tag" >/dev/null 2>&1; then
+            commit_msg=$(git log --format="%s" "$tag" -1)
+            echo "Creating release for tag: $tag"
+            case "$commit_msg" in
+              "feat:"*)
+                gh release create "$tag" --title "$tag - New Features" --notes "## 🚀 New Features\n\n- ${commit_msg#feat: }\n\nThis release introduces new functionality."
+                ;;
+              "fix:"*)
+                gh release create "$tag" --title "$tag - Bug Fixes" --notes "## 🐛 Bug Fixes\n\n- ${commit_msg#fix: }\n\nThis release fixes bugs and issues."
+                ;;
+              "docs:"*)
+                gh release create "$tag" --title "$tag - Documentation" --notes "## 📚 Documentation\n\n- ${commit_msg#docs: }\n\nThis release updates documentation."
+                ;;
+              "chore:"*)
+                gh release create "$tag" --title "$tag - Maintenance" --notes "## 🧹 Maintenance\n\n- ${commit_msg#chore: }\n\nThis is a maintenance release."
+                ;;
+              *)
+                gh release create "$tag" --title "$tag" --notes "## 🔄 Release\n\n- $commit_msg\n\nRelease notes for $tag."
+                ;;
+            esac
+          else
+            echo "Release for tag $tag already exists"
+          fi
+        done
+        echo "Releases created successfully"
+
+  github-update-mkdocs:
+    desc: Update MkDocs configuration with repository information
+    cmds:
+      - |
+        if [ -z "{{.REPO_NAME}}" ]; then
+          echo "Error: REPO_NAME is required"
+          echo "Usage: task github-update-mkdocs REPO_NAME=my-repo"
+          exit 1
+        fi
+        echo "Updating MkDocs configuration for {{.GITHUB_ORG}}/{{.REPO_NAME}}..."
+        # Update mkdocs.yml with repository information
+        sed -i.bak "s|site_name:.*|site_name: {{.SITE_NAME}}|g" {{.MKDOCS_CONFIG}}
+        sed -i.bak "s|site_author:.*|site_author: {{.SITE_AUTHOR}}|g" {{.MKDOCS_CONFIG}}
+        sed -i.bak "s|site_url:.*|site_url: https://{{.GITHUB_ORG}}.github.io/{{.REPO_NAME}}|g" {{.MKDOCS_CONFIG}}
+        sed -i.bak "s|repo_name:.*|repo_name: {{.GITHUB_ORG}}/{{.REPO_NAME}}|g" {{.MKDOCS_CONFIG}}
+        sed -i.bak "s|repo_url:.*|repo_url: https://github.com/{{.GITHUB_ORG}}/{{.REPO_NAME}}|g" {{.MKDOCS_CONFIG}}
+        sed -i.bak "s|repository:.*|repository: {{.GITHUB_ORG}}/{{.REPO_NAME}}|g" {{.MKDOCS_CONFIG}}
+        sed -i.bak "s|link: https://github.com/.*/.*|link: https://github.com/{{.GITHUB_ORG}}/{{.REPO_NAME}}|g" {{.MKDOCS_CONFIG}}
+        rm -f {{.MKDOCS_CONFIG}}.bak
+        echo "MkDocs configuration updated successfully"
+
+  github-setup-complete:
+    desc: Complete GitHub repository setup workflow
+    cmds:
+      - |
+        if [ -z "{{.REPO_NAME}}" ]; then
+          echo "Error: REPO_NAME is required"
+          echo "Usage: task github-setup-complete REPO_NAME=my-repo [SITE_NAME='My Site'] [SITE_AUTHOR='Author Name']"
+          exit 1
+        fi
+        echo "Starting complete GitHub repository setup..."
+      - task: github-create-repo
+        vars:
+          REPO_NAME: '{{.REPO_NAME}}'
+          SITE_NAME: '{{.SITE_NAME}}'
+          SITE_AUTHOR: '{{.SITE_AUTHOR}}'
+      - task: github-commit-and-push
+        vars:
+          REPO_NAME: '{{.REPO_NAME}}'
+      - |
+        echo "✅ GitHub repository setup complete!"
+        echo "Repository: https://github.com/{{.GITHUB_ORG}}/{{.REPO_NAME}}"
+        echo "Documentation: https://{{.GITHUB_ORG}}.github.io/{{.REPO_NAME}}"
+
+  github-commit-and-push:
+    desc: Commit MkDocs changes and push to repository
+    cmds:
+      - |
+        echo "Committing and pushing changes..."
+        git add {{.MKDOCS_CONFIG}}
+        git commit -m "feat: configure MkDocs for {{.REPO_NAME}} repository with git tracking and PDF export" || echo "No changes to commit"
+        git push
+        git push --tags
+        echo "Changes pushed successfully"
+
+  github-enable-pages:
+    desc: Enable GitHub Pages for the repository
+    cmds:
+      - |
+        echo "Enabling GitHub Pages..."
+        gh api repos/{{.GITHUB_ORG}}/{{.REPO_NAME}}/pages \
+          --method POST \
+          --field source.branch=gh-pages \
+          --field source.path=/ \
+          || echo "GitHub Pages may already be enabled or requires manual setup"
+        echo "GitHub Pages configuration attempted"
+
+  github-create-workflow:
+    desc: Create GitHub Actions workflow for MkDocs deployment
+    cmds:
+      - |
+        echo "Creating GitHub Actions workflow..."
+        mkdir -p .github/workflows
+        cat > .github/workflows/docs.yml << 'EOF'
+        name: Deploy MkDocs to GitHub Pages
+        
+        on:
+          push:
+            branches: [ main, master ]
+          pull_request:
+            branches: [ main, master ]
+        
+        permissions:
+          contents: read
+          pages: write
+          id-token: write
+        
+        concurrency:
+          group: "pages"
+          cancel-in-progress: false
+        
+        jobs:
+          build:
+            runs-on: ubuntu-latest
+            steps:
+              - uses: actions/checkout@v4
+                with:
+                  fetch-depth: 0
+                  token: ${{ secrets.GITHUB_TOKEN }}
+        
+              - name: Setup Python
+                uses: actions/setup-python@v4
+                with:
+                  python-version: '3.11'
+        
+              - name: Install dependencies
+                run: |
+                  pip install -r requirements.txt
+        
+              - name: Build documentation
+                run: |
+                  mkdocs build --strict
+        
+              - name: Setup Pages
+                uses: actions/configure-pages@v3
+        
+              - name: Upload artifact
+                uses: actions/upload-pages-artifact@v2
+                with:
+                  path: ./site
+        
+          deploy:
+            if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+            environment:
+              name: github-pages
+              url: ${{ steps.deployment.outputs.page_url }}
+            runs-on: ubuntu-latest
+            needs: build
+            steps:
+              - name: Deploy to GitHub Pages
+                id: deployment
+                uses: actions/deploy-pages@v2
+        EOF
+        echo "GitHub Actions workflow created at .github/workflows/docs.yml"
 
   # === Deployment Tasks ===
   deploy-gh-pages:
