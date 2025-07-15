@@ -1,12 +1,12 @@
 # MkDocs Template
 
-site_name: Project Documentation
-site_description: Comprehensive documentation for the project.
+site_name: Template Workspace
+site_description: Comprehensive MkDocs template with advanced features and documentation.
 site_author: Documentation Team
-site_url: https://yourusername.github.io/project
+site_url: https://brunseba.github.io/template_workspace
 
-repo_name: yourusername/project
-repo_url: https://github.com/yourusername/project
+repo_name: brunseba/template_workspace
+repo_url: https://github.com/brunseba/template_workspace
 edit_uri: edit/main/docs/
 
 copyright: Copyright © 2025 Documentation Team
@@ -47,12 +47,17 @@ theme:
 plugins:
   - search:
       lang: en
-  # Git plugins disabled for template - enable when you have a real repository
-  # - git-revision-date-localized:
-  #     enable_creation_date: true
-  # - git-committers:
-  #     repository: yourusername/project
-  #     branch: main
+  - git-revision-date-localized:
+      enable_creation_date: true
+  - git-committers:
+      repository: brunseba/template_workspace
+      branch: main
+  - with-pdf:
+      author: Documentation Team
+      copyright: Copyright © 2025 Documentation Team
+      cover_title: Template Workspace
+      cover_subtitle: Comprehensive MkDocs Template Documentation
+      output_path: pdf/documentation.pdf
 
 # Markdown Extensions
 markdown_extensions:
@@ -101,5 +106,5 @@ extra:
 
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/yourusername/project
+      link: https://github.com/brunseba/template_workspace
 
