@@ -23,12 +23,33 @@ class MkDocsYamlLoader(SafeLoader):
     pass
 
 # Add constructor for Python function references
-def python_name_constructor(loader, node):
+def python_name_constructor(loader, tag_suffix, node):
     """Handle !!python/name: tags by returning a placeholder string"""
-    if hasattr(node, 'value'):
-        return f"<python_function:{node.value}>"
-    else:
-        return "<python_function:unknown>"
+    # tag_suffix contains the part after 'python/name:'
+    return f"<python_function:{tag_suffix}>"
+
+# Add constructor for python/object/apply tags
+def python_object_apply_constructor(loader, tag_suffix, node):
+    """Handle !!python/object/apply: tags by returning a placeholder string"""
+    # tag_suffix contains the part after 'python/object/apply:'
+    return f"<python_object:{tag_suffix}>"
+
+# Add constructor for !ENV tags (used for environment variables in MkDocs)
+def env_constructor(loader, node):
+    """Handle !ENV tags by returning the environment variable or a placeholder"""
+    if isinstance(node, yaml.ScalarNode):
+        value = loader.construct_scalar(node)
+        # Return environment variable value if it exists, otherwise return placeholder
+        return os.environ.get(value, f"${{{value}}}")
+    elif isinstance(node, yaml.SequenceNode):
+        # Handle !ENV [VAR_NAME, default_value]
+        values = loader.construct_sequence(node)
+        if len(values) >= 1:
+            var_name = values[0]
+            default_value = values[1] if len(values) > 1 else f"${{{var_name}}}"
+            return os.environ.get(var_name, default_value)
+        return "<env_var>"
+    return "<env_var>"
 
 # Add constructor for the specific tag format that MkDocs uses
 MkDocsYamlLoader.add_constructor('tag:yaml.org,2002:python/name:pymdownx.superfences.fence_code_format', 
@@ -36,6 +57,12 @@ MkDocsYamlLoader.add_constructor('tag:yaml.org,2002:python/name:pymdownx.superfe
 
 # Add generic constructor for any python/name tags
 MkDocsYamlLoader.add_multi_constructor('tag:yaml.org,2002:python/name:', python_name_constructor)
+
+# Add generic constructor for any python/object/apply tags
+MkDocsYamlLoader.add_multi_constructor('tag:yaml.org,2002:python/object/apply:', python_object_apply_constructor)
+
+# Add constructor for !ENV tags
+MkDocsYamlLoader.add_constructor('!ENV', env_constructor)
 
 def check_mermaid_cli_availability():
     """Check if mermaid-cli is available via different methods"""
@@ -361,7 +388,7 @@ def create_combined_markdown(files, output_path, images_dir):
                 print(f"Error processing {file_path}: {e}")
                 combined.write(f"*Error loading content from {file_path}*\n\n")
 
-def convert_to_docx(markdown_path, docx_path):
+def convert_to_docx(markdown_path, docx_path, include_toc=True):
     """Convert markdown to DOCX using Pandoc"""
     
     # Pandoc command with comprehensive options
@@ -371,14 +398,16 @@ def convert_to_docx(markdown_path, docx_path):
         '-o', docx_path,
         '--from', 'markdown+fenced_code_blocks+fenced_code_attributes+backtick_code_blocks',
         '--to', 'docx',
-        '--toc',
-        '--toc-depth=3',
         '--number-sections',
-        '--highlight-style', 'pygments',
+        '--syntax-highlighting=pygments',
         '--metadata', 'title=Complete Documentation',
         '--metadata', 'author=Documentation Team',
         '--metadata', 'date=' + subprocess.check_output(['date', '+%Y-%m-%d']).decode().strip(),
     ]
+    
+    # Add TOC options if enabled
+    if include_toc:
+        cmd.extend(['--toc', '--toc-depth=3'])
     
     # Add reference doc if it exists
     if os.path.exists('scripts/reference.docx'):
@@ -396,7 +425,7 @@ def convert_to_docx(markdown_path, docx_path):
         print(f"Error output: {e.stderr}")
         raise
 
-def main():
+def main(verbose=False, include_toc=True):
     """Main conversion process"""
     
     # Change to project root if we're in scripts directory
@@ -407,6 +436,9 @@ def main():
     if not os.path.exists('mkdocs.yml'):
         print("Error: mkdocs.yml not found. Run this script from the project root or scripts directory.")
         return 1
+    
+    if verbose:
+        print("Verbose mode enabled")
     
     # Load MkDocs configuration
     print("Loading MkDocs configuration...")
@@ -436,7 +468,7 @@ def main():
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
         
         print(f"Converting to DOCX: {output_path}")
-        convert_to_docx(temp_md_path, output_path)
+        convert_to_docx(temp_md_path, output_path, include_toc=include_toc)
         
         print(f"\n✅ Success! DOCX file created: {output_path}")
         print(f"📄 File size: {os.path.getsize(output_path)} bytes")

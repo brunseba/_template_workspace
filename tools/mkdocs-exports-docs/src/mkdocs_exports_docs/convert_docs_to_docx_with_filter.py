@@ -26,11 +26,13 @@ logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 logger = logging.getLogger(__name__)
 
 class MkDocsToDocxConverter:
-    def __init__(self, project_root: Path):
+    def __init__(self, project_root: Path, verbose: bool = False, include_toc: bool = True):
         self.project_root = project_root
         self.docs_dir = project_root / "docs"
         self.export_dir = project_root / "docs" / "export"
         self.mkdocs_config = project_root / "mkdocs.yml"
+        self.verbose = verbose
+        self.include_toc = include_toc
         
         # Ensure export directory exists
         self.export_dir.mkdir(exist_ok=True)
@@ -180,8 +182,6 @@ class MkDocsToDocxConverter:
                 '--from', 'markdown',
                 '--to', 'docx',
                 '--output', str(output_file),
-                '--toc',
-                '--toc-depth=3',
                 '--standalone',
                 '--reference-doc=' + str(self.project_root / 'scripts' / 'reference.docx') if (self.project_root / 'scripts' / 'reference.docx').exists() else '',
                 '--metadata', 'title=Complete Documentation',
@@ -189,11 +189,17 @@ class MkDocsToDocxConverter:
                 '--metadata', 'date=' + subprocess.run(['date', '+%Y-%m-%d'], capture_output=True, text=True).stdout.strip()
             ]
             
+            # Add TOC options if enabled
+            if self.include_toc:
+                pandoc_cmd.extend(['--toc', '--toc-depth=3'])
+            
             # Remove empty reference-doc argument if file doesn't exist
             pandoc_cmd = [arg for arg in pandoc_cmd if arg and not arg.startswith('--reference-doc=--reference-doc')]
             
+            if self.verbose:
+                logger.debug(f"Command: {' '.join(pandoc_cmd)}")
+            
             logger.info(f"Running pandoc with mermaid filter...")
-            logger.debug(f"Command: {' '.join(pandoc_cmd)}")
             
             result = subprocess.run(
                 pandoc_cmd,
@@ -271,12 +277,12 @@ class MkDocsToDocxConverter:
             
         return success
 
-def main():
+def main(verbose: bool = False, include_toc: bool = True):
     """Main entry point."""
     script_dir = Path(__file__).parent
     project_root = script_dir.parent
     
-    converter = MkDocsToDocxConverter(project_root)
+    converter = MkDocsToDocxConverter(project_root, verbose=verbose, include_toc=include_toc)
     success = converter.run()
     
     sys.exit(0 if success else 1)
