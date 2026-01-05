@@ -204,5 +204,90 @@ Examples:
     generate_drawio_file(mermaid_files, output_file, args.verbose)
 
 
+def convert_mermaid_to_drawio(mermaid_content: str) -> str:
+    """
+    Convert a single Mermaid diagram to Draw.io XML format.
+    
+    Args:
+        mermaid_content: The Mermaid diagram content
+        
+    Returns:
+        XML string in Draw.io format
+    """
+    # Create a temporary file to use with generate_drawio_file
+    import tempfile
+    import os
+    
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.mmd', delete=False) as temp_file:
+        temp_file.write(mermaid_content)
+        temp_file_path = temp_file.name
+    
+    try:
+        with tempfile.NamedTemporaryFile(mode='r', suffix='.drawio', delete=False) as output_file:
+            output_file_path = output_file.name
+        
+        # Generate the drawio file
+        generate_drawio_file([temp_file_path], output_file_path, verbose=False)
+        
+        # Read the generated content
+        if os.path.exists(output_file_path):
+            with open(output_file_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+            # Add XML declaration if not present
+            if not content.startswith('<?xml'):
+                content = '<?xml version="1.0" encoding="UTF-8"?>\n' + content
+            return content
+        else:
+            # Return minimal valid XML if file generation failed
+            return '<?xml version="1.0" encoding="UTF-8"?>\n<mxfile><diagram></diagram></mxfile>'
+    
+    finally:
+        # Clean up temporary files
+        if os.path.exists(temp_file_path):
+            os.unlink(temp_file_path)
+        if os.path.exists(output_file_path):
+            os.unlink(output_file_path)
+
+
+def process_mermaid_files(directory: str) -> List[str]:
+    """
+    Process all Mermaid files in a directory and create Draw.io files.
+    
+    Args:
+        directory: Directory containing .mmd files
+        
+    Returns:
+        List of processed file paths
+    """
+    if not os.path.exists(directory) or not os.path.isdir(directory):
+        return []
+    
+    # Find all .mmd files
+    mmd_files = glob.glob(os.path.join(directory, "*.mmd"))
+    
+    if not mmd_files:
+        return []
+    
+    processed_files = []
+    
+    for mmd_file in mmd_files:
+        try:
+            # Generate corresponding .drawio file
+            base_name = os.path.splitext(os.path.basename(mmd_file))[0]
+            drawio_file = os.path.join(directory, f"{base_name}.drawio")
+            
+            # Generate the drawio file
+            generate_drawio_file([mmd_file], drawio_file, verbose=False)
+            
+            if os.path.exists(drawio_file):
+                processed_files.append(mmd_file)
+        
+        except Exception as e:
+            # Skip files that can't be processed
+            continue
+    
+    return processed_files
+
+
 if __name__ == "__main__":
     main()

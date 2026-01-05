@@ -23,9 +23,9 @@ def extract_mermaid_blocks(content: str) -> List[Tuple[str, str]]:
     Returns:
         List of tuples containing (diagram_type, diagram_content)
     """
-    # Pattern to match mermaid code blocks
-    pattern = r'```mermaid\n(.*?)\n```'
-    matches = re.findall(pattern, content, re.DOTALL)
+    # Pattern to match mermaid code blocks (case-insensitive, with optional spaces)
+    pattern = r'```\s*mermaid\s*\n(.*?)\n?```'
+    matches = re.findall(pattern, content, re.DOTALL | re.IGNORECASE)
     
     diagrams = []
     for match in matches:
@@ -36,6 +36,17 @@ def extract_mermaid_blocks(content: str) -> List[Tuple[str, str]]:
             diagrams.append((diagram_type, match.strip()))
     
     return diagrams
+
+
+def extract_mermaid_diagrams(content: str) -> List[str]:
+    """
+    Extract Mermaid diagrams from markdown content (simplified version).
+    
+    Returns:
+        List of diagram content strings
+    """
+    diagrams = extract_mermaid_blocks(content)
+    return [diagram[1] for diagram in diagrams]
 
 
 def generate_mmd_files(md_file: Path, output_dir: Path, verbose: bool = False) -> int:
